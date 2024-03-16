@@ -16,7 +16,7 @@
         <div class="column">
             <div class="radio-inline"> <input type="radio" class="radio_item" value="adventure" name="activity" id="adventure"> Hike, explore, and adventure</div>
             <div class="radio-inline"> <input type="radio" class="radio_item" value="culture" name="activity" id="culture"> Immerse in history and culture </div>
-            <div class="radio-inline"> <input type="radio" class="radio_item" value="party" name="activity" id="party"> Party like a rockstar </div>
+            <div class="radio-inline"> <input type="radio" class="radio_item" value="shopping" name="activity" id="shopping"> Shopping please </div>
             <div class="radio-inline"> <input type="radio" class="radio_item" value="relaxation" name="activity" id="relaxation"> Unwind and take it easy </div>
             <br>
         </div>
@@ -77,14 +77,14 @@
 </div>
 
 <!-- Favorite Architecture Aesthetic and Vibe -->
-<label for="interior-design"><b>What's your interior design style?</b></label><br>
-<div id="interior-design" class="form-inline">
+<label for="packing-items"><b>What's always a must on your packing list?</b></label><br>
+<div id="packing-items" class="form-inline">
     <div class="form-group">
         <div class="column">
-            <div class="radio-inline"><input type="radio" class="radio_item" value="classic" name="interior-design" id="classic"> Classic</div>
-            <div class="radio-inline"><input type="radio" class="radio_item" value="contemporary" name="interior-design" id="contemporary"> Contemporary</div>
-            <div class="radio-inline"><input type="radio" class="radio_item" value="cottage" name="interior-design" id="cottage"> Cottage Core</div>
-            <div class="radio-inline"><input type="radio" class="radio_item" value="mid" name="interior-design" id="mid"> Mid Century Modern</div>
+            <div class="radio-inline"><input type="radio" class="radio_item" value="camera" name="packing-items" id="camera"> Camera, gotta build the instagram</div>
+            <div class="radio-inline"><input type="radio" class="radio_item" value="bathing-suit" name="packing-items" id="bathing-suit"> A bathing suit or two or ten</div>
+            <div class="radio-inline"><input type="radio" class="radio_item" value="dictionary" name="packing-items" id="dictionary"> Translation dictionary, I need to blend in as much as possible</div>
+            <div class="radio-inline"><input type="radio" class="radio_item" value="hiking-shoes" name="packing-items" id="hiking-shoes"> Hiking shoes, I don't care how much room they take up</div>
             <br>
         </div>
     </div>
@@ -163,9 +163,9 @@
             "low": ['Bali', 'Cuba', 'Mexico', 'Colombia']
         },
         "activity": {
-            "adventure": ['Iceland', 'Australia', ],
-            "culture": ['Italy', 'Greece', 'Paris', 'Spain', 'Morocco', 'Japan', 'Cuba'],
-            "party": ['New York', 'London',  'Austin', 'Colombia'],
+            "adventure": ['Iceland', 'Australia', 'Colombia' ],
+            "culture": ['Italy', 'Greece', 'Spain', 'Morocco', 'Cuba'],
+            "shopping": ['Japan', 'Paris', 'New York', 'London',  'Austin'],
             "relaxation": ['Mexico', 'Bali', 'Grenada']
         },
         "temperature": {
@@ -178,43 +178,43 @@
             "italian": ['Italy', 'Greece', 'Paris'],
             "chinese": ['Japan', 'Bali', 'New York'],
             "mexican": ['Mexico', 'Austin', 'Cuba', 'Spain', 'Colombia'],
-            "indian": ['London', 'Morocco'] // Adjusted to keep cities within the possibleDestinations
+            "indian": ['London', 'Morocco']
         },
         "companion": {
             "alone": ['Iceland', 'Colombia', 'Morocco'],
             "partner": ['Paris', 'Japan', 'Bali', 'Grenada', 'Italy'],
             "friends": ['New York', 'Greece', 'Austin', 'Cuba' ],
-            "family": ['Mexico', 'Spain', 'London', 'Australia'] // Adjusted to spread destinations evenly
+            "family": ['Mexico', 'Spain', 'London', 'Australia']
         },
         "night-time": {
             "clubbing": ['Japan', 'Austin', 'New York', 'Greece', 'Cuba'],
             "bath": ['Grenada', 'Mexico', 'Bali'],
             "sports": ['Colombia', 'Iceland','Australia'],
-            "art": ['London', 'Morocco', 'Spain','Italy', 'Paris' ] // Adjusted to match destinations with the activity
+            "art": ['London', 'Morocco', 'Spain','Italy', 'Paris' ]
         },
-        "interior-design": {
-            "classic": ['Greece', 'Italy'],
-            "contemporary": ['New York', 'Austin'],
-            "cottage": ['Japan', 'London'], // Adjusted for a logical fit
-            "mid": ['Cuba', 'Paris', 'Mexico', 'Colombia'] // Adjusted to include destinations only once across categories
+        "packing-items": {
+            "camera": ['Paris', 'London', 'Greece', 'Italy', 'New York'],
+            "bathing-suit": [ 'Austin','Mexico','Bali', 'Grenada', 'Cuba'],
+            "dictionary": ['Morocco', 'Japan', 'Spain'],
+            "hiking-shoes": ['Iceland', 'Australia', 'Colombia']
         },
         "career": {
             "sculptor": ['Paris', 'Spain','London', 'Morocco'],
             "chef": ['New York', 'Japan','Greece', 'Italy', 'Austin'],
             "surfer": ['Mexico', 'Grenada', 'Bali', 'Cuba'],
-            "park": [ 'Australia', 'Iceland', 'Colombia'] // Adjusted to spread destinations
+            "park": [ 'Australia', 'Iceland', 'Colombia']
         },
         "movie": {
             "action": ['New York', 'Colombia', 'Australia', 'Iceland'],
             "romance": ['Paris', 'London', 'Spain', 'Italy', 'Grenada', 'Bali'],
             "comedy": ['Greece', 'Austin', 'Cuba', 'Mexico' ],
-            "sci-fi": ['Japan', 'Morocco' ] // Adjusted for coherence with movie genres
+            "sci-fi": ['Japan', 'Morocco' ]
         },
         "orderly": {
             "very": ['Japan', 'London', 'Morocco' ],
             "moderate": ['Australia', 'Austin', 'Paris', 'Greece', 'Italy', 'Spain'],
             "minimal": ['Bali', 'Iceland', 'Grenada'],
-            "chaotic": ['New York','Cuba', 'Colombia', 'Mexico'] // Adjusted to ensure each city is listed once
+            "chaotic": ['New York','Cuba', 'Colombia', 'Mexico']
         }
     };
 
@@ -224,6 +224,13 @@
         const budgetRadios = document.getElementsByName('budget');
         const activityRadios = document.getElementsByName('activity');
         const temperatureRadios = document.getElementsByName('temperature');
+        const foodRadios = document.getElementsByName('food');
+        const companionRadios = document.getElementsByName('companion');
+        const nightTimeRadios = document.getElementsByName('night-time');
+        const interiorDesignRadios = document.getElementsByName('packing-items');
+        const careerRadios = document.getElementsByName('career');
+        const movieRadios = document.getElementsByName('movie');
+        const orderlyRadios = document.getElementsByName('orderly');
         const destinationImage = document.getElementById('destination-image');
         const destinationName = document.getElementById('destination-name');
 
@@ -231,11 +238,19 @@
             const budget = Array.from(budgetRadios).find(radio => radio.checked)?.value;
             const activity = Array.from(activityRadios).find(radio => radio.checked)?.value;
             const temperature = Array.from(temperatureRadios).find(radio => radio.checked)?.value;
-            if (budget && activity && temperature) {
+            const food = Array.from(foodRadios).find(radio => radio.checked)?.value;
+            const companion = Array.from(companionRadios).find(radio => radio.checked)?.value;
+            const nightTime = Array.from(nightTimeRadios).find(radio => radio.checked)?.value;
+            const interiorDesign = Array.from(interiorDesignRadios).find(radio => radio.checked)?.value;
+            const career = Array.from(careerRadios).find(radio => radio.checked)?.value;
+            const movie = Array.from(movieRadios).find(radio => radio.checked)?.value;
+            const orderly = Array.from(orderlyRadios).find(radio => radio.checked)?.value;
+
+            if (budget && activity && temperature && food && companion && nightTime && interiorDesign && career && movie && orderly) {
                 const destinationPoints = {};
-                // Check each category (budget, activity, temperature) and tally points for destinations
-                const categories = ['budget', 'activity', 'temperature'];
-                const answers = [budget, activity, temperature];
+                // Check each category and tally points for destinations
+                const categories = ['budget', 'activity', 'temperature', 'food', 'companion', 'night-time', 'packing-items', 'career', 'movie', 'orderly'];
+                const answers = [budget, activity, temperature, food, companion, nightTime, interiorDesign, career, movie, orderly];
                 for (let i = 0; i < answers.length; i++) {
                     if (points[categories[i]][answers[i]]) {
                         points[categories[i]][answers[i]].forEach(destination => {
@@ -243,8 +258,8 @@
                         });
                     }
                 }
-                console.log(destinationPoints)
-                // Find the destination with the most points by sorting by points then by alphabetical order
+                // Find the destination with the most points by sorting
+                console.log(destinationPoints);
                 const destinationKey = Object.keys(destinationPoints).sort((a, b) => {
                     if (destinationPoints[a] === destinationPoints[b]) {
                         return a.localeCompare(b);
@@ -253,7 +268,7 @@
                 })[0];
                 destinationImage.src = possibleDestinations[destinationKey] || 'https://example.com/placeholder.jpg'; // Placeholder image URL
                 destinationName.textContent = `You're going to ${destinationKey || 'an amazing destination'}!`;
-                destinationName.style.display = 'block'; // Make sure to display the destination name
+                destinationName.style.display = 'block';
                 destinationImage.style.display = 'block';
             } else {
                 destinationName.style.display = 'none';
@@ -261,9 +276,8 @@
             }
         }
 
-        if (budgetRadios) budgetRadios.forEach(radio => radio.addEventListener('change', updateDestinationImage));
-        if (activityRadios) activityRadios.forEach(radio => radio.addEventListener('change', updateDestinationImage));
-        if (temperatureRadios) temperatureRadios.forEach(radio => radio.addEventListener('change', updateDestinationImage));
+        // Attach the event listener to all categories
+        const allRadios = [budgetRadios, activityRadios, temperatureRadios, foodRadios, companionRadios, nightTimeRadios, interiorDesignRadios, careerRadios, movieRadios, orderlyRadios];
+        allRadios.forEach(group => group.forEach(radio => radio.addEventListener('change', updateDestinationImage)));
     });
-
 </script>
