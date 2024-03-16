@@ -141,6 +141,8 @@
     </div>
 </div>
 
+<button id="submit-quiz" style="margin-top: 20px;">Submit</button> <!-- Submit Button -->
+
 
 <div id="destination-name" style="font-size: 24px; margin-top: 20px; display: none;"></div>
 <img id="destination-image" src="" alt="Recommended Destination" style="max-width: 500px; display: none;">
@@ -255,6 +257,17 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+        const submitButton = document.getElementById('submit-quiz');
+
+        submitButton.addEventListener('click', function() {
+            const email = document.getElementById('email-input').value;
+            if (email) {
+                updateDestinationImage();
+            } else {
+                alert('Please enter your email address to see your recommended destination.');
+            }
+        });
+        
         const budgetRadios = document.getElementsByName('budget');
         const activityRadios = document.getElementsByName('activity');
         const temperatureRadios = document.getElementsByName('temperature');
@@ -279,8 +292,10 @@
             const career = Array.from(careerRadios).find(radio => radio.checked)?.value;
             const movie = Array.from(movieRadios).find(radio => radio.checked)?.value;
             const orderly = Array.from(orderlyRadios).find(radio => radio.checked)?.value;
+            const email = document.getElementById('email-input').value;
 
-            if (budget && activity && temperature && food && companion && nightTime && interiorDesign && career && movie && orderly) {
+
+            if (budget && activity && temperature && food && companion && nightTime && interiorDesign && career && movie && orderly && email) {
                 const destinationPoints = {};
                 // Check each category and tally points for destinations
                 const categories = ['budget', 'activity', 'temperature', 'food', 'companion', 'night-time', 'packing-items', 'career', 'movie', 'orderly'];
