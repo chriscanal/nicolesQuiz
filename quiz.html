@@ -132,6 +132,15 @@
     </div>
 </div>
 
+<!-- Email Address -->
+<label for="email"><b>What's your email address? (So we can send you your dream vacation details!)</b></label><br>
+<div id="email" class="form-inline">
+    <div class="form-group">
+        <input type="email" class="form-control" name="email" id="email-input" placeholder="you@example.com">
+        <br>
+    </div>
+</div>
+
 
 <div id="destination-name" style="font-size: 24px; margin-top: 20px; display: none;"></div>
 <img id="destination-image" src="" alt="Recommended Destination" style="max-width: 500px; display: none;">
@@ -217,8 +226,33 @@
             "chaotic": ['New York','Cuba', 'Colombia', 'Mexico']
         }
     };
+    function sendSurveyResults(destinationKey) {
+        const budget = document.querySelector('input[name="budget"]:checked')?.value;
+        const activity = document.querySelector('input[name="activity"]:checked')?.value;
+        const temperature = document.querySelector('input[name="temperature"]:checked')?.value;
+        const food = document.querySelector('input[name="food"]:checked')?.value;
+        const companion = document.querySelector('input[name="companion"]:checked')?.value;
+        const nightTime = document.querySelector('input[name="night-time"]:checked')?.value;
+        const packingItems = document.querySelector('input[name="packing-items"]:checked')?.value;
+        const career = document.querySelector('input[name="career"]:checked')?.value;
+        const movie = document.querySelector('input[name="movie"]:checked')?.value;
+        const orderly = document.querySelector('input[name="orderly"]:checked')?.value;
+        const email = document.getElementById('email-input').value; 
 
+        // Construct the webhook URL with query parameters
+        const webhookUrl = `https://hooks.zapier.com/hooks/catch/18256938/300p734/?budget=${budget}&activity=${activity}&temperature=${temperature}&food=${food}&companion=${companion}&night-time=${nightTime}&packing-items=${packingItems}&career=${career}&movie=${movie}&orderly=${orderly}&destination=${destinationKey}&email=${email}`;
 
+        // Make the POST request
+        fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        })
+        .then(response => response.json())
+        .then(data => console.log('Success:', data))
+        .catch((error) => console.error('Error:', error));
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
         const budgetRadios = document.getElementsByName('budget');
@@ -268,6 +302,7 @@
                 })[0];
                 destinationImage.src = possibleDestinations[destinationKey] || 'https://example.com/placeholder.jpg'; // Placeholder image URL
                 destinationName.textContent = `You're going to ${destinationKey || 'an amazing destination'}!`;
+                sendSurveyResults(destinationKey);
                 destinationName.style.display = 'block';
                 destinationImage.style.display = 'block';
             } else {
