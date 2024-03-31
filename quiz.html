@@ -241,19 +241,43 @@
         const orderly = document.querySelector('input[name="orderly"]:checked')?.value;
         const email = document.getElementById('email-input').value; 
 
-        // Construct the webhook URL with query parameters
-        const webhookUrl = `https://hooks.zapier.com/hooks/catch/18256938/300p734/?budget=${budget}&activity=${activity}&temperature=${temperature}&food=${food}&companion=${companion}&night-time=${nightTime}&packing-items=${packingItems}&career=${career}&movie=${movie}&orderly=${orderly}&destination=${destinationKey}&email=${email}`;
+        // Prepare the data object to send to EmailJS
+        const data = {
+            service_id: 'service_up1w6y9',
+            template_id: 'template_ohqmdbs',
+            user_id: 'UTPbCzFLRx8TZrFX5',
+            template_params: {
+                'email': email,
+                'budget': budget,
+                'activity': activity,
+                'temperature': temperature,
+                'food': food,
+                'companion': companion,
+                'nightTime': nightTime,
+                'packingItems': packingItems,
+                'career': career,
+                'movie': movie,
+                'orderly': orderly,
+                'destination': destinationKey
+            }
+        };
 
-        // Make the POST request
-        fetch(webhookUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        })
-        .then(response => response.json())
-        .then(data => console.log('Success:', data))
-        .catch((error) => console.error('Error:', error));
+        // Make the AJAX request to EmailJS
+        fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if(response.ok) {
+                    return response.text();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(text => console.log(text))
+            .catch(error => alert('Oops... ' + error));
     }
 
     document.addEventListener('DOMContentLoaded', function() {
