@@ -282,13 +282,23 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         const submitButton = document.getElementById('submit-quiz');
+        let formSubmittedSuccessfully = false; // Variable to track if the form has been successfully submitted
 
-        submitButton.addEventListener('click', function() {
+        function allRadioGroupsSelected() {
+            // Function to check if all radio groups have a selection
+            const allRadioGroups = ['budget', 'activity', 'temperature', 'food', 'companion', 'night-time', 'packing-items', 'career', 'movie', 'orderly'];
+            return allRadioGroups.every(group => document.querySelector(`input[name="${group}"]:checked`));
+        }
+
+        submitButton.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent the form from submitting traditionally
             const email = document.getElementById('email-input').value;
-            if (email) {
-                updateDestinationImage();
-            } else {
-                alert('Please enter your email address to see your recommended destination.');
+            if (!formSubmittedSuccessfully && email && allRadioGroupsSelected()) {
+                let destinationKey = updateDestinationImage(true); // Pass true to indicate form submission
+                sendSurveyResults(destinationKey);
+                formSubmittedSuccessfully = true; // Mark that the form has been submitted successfully
+            } else if (!email || !allRadioGroupsSelected()) {
+                alert('Please make sure all fields are selected and your email address is entered.');
             }
         });
         
@@ -317,6 +327,7 @@
             const movie = Array.from(movieRadios).find(radio => radio.checked)?.value;
             const orderly = Array.from(orderlyRadios).find(radio => radio.checked)?.value;
             const email = document.getElementById('email-input').value;
+            let destinationKey = null;
 
 
             if (budget && activity && temperature && food && companion && nightTime && interiorDesign && career && movie && orderly && email) {
@@ -333,7 +344,7 @@
                 }
                 // Find the destination with the most points by sorting
                 console.log(destinationPoints);
-                const destinationKey = Object.keys(destinationPoints).sort((a, b) => {
+                destinationKey = Object.keys(destinationPoints).sort((a, b) => {
                     if (destinationPoints[a] === destinationPoints[b]) {
                         return a.localeCompare(b);
                     }
@@ -341,17 +352,21 @@
                 })[0];
                 destinationImage.src = possibleDestinations[destinationKey] || 'https://example.com/placeholder.jpg'; // Placeholder image URL
                 destinationName.textContent = `You're going to ${destinationKey || 'an amazing destination'}!`;
-                sendSurveyResults(destinationKey);
                 destinationName.style.display = 'block';
                 destinationImage.style.display = 'block';
             } else {
                 destinationName.style.display = 'none';
                 destinationImage.style.display = 'none';
             }
+            return destinationKey;
         }
 
-        // Attach the event listener to all categories
+        // Attach the event listener to all categories, same as before
         const allRadios = [budgetRadios, activityRadios, temperatureRadios, foodRadios, companionRadios, nightTimeRadios, interiorDesignRadios, careerRadios, movieRadios, orderlyRadios];
-        allRadios.forEach(group => group.forEach(radio => radio.addEventListener('change', updateDestinationImage)));
+        allRadios.forEach(group => group.forEach(radio => radio.addEventListener('change', function() {
+            if (formSubmittedSuccessfully) {
+                updateDestinationImage();
+            }
+        })));
     });
 </script>
